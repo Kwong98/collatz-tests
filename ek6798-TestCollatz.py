@@ -15,7 +15,7 @@
 from io import StringIO
 from unittest import main, TestCase
 
-from Collatz import collatz_read, collatz_eval, collatz_print, collatz_solve
+from Collatz import collatz_read, collatz_eval, collatz_print, collatz_solve, collatz_single_recursive
 
 # -----------
 # TestCollatz
@@ -95,6 +95,45 @@ class TestCollatz(TestCase):
         """unit test: collatz_eval"""
         value = collatz_eval(99999, 1000)
         self.assertEqual(value, 351)
+
+    # ----------------
+    # single_recursive
+    # ----------------
+
+    def test_single_recursive_1(self):
+        """unit test: collatz_single_recursive"""
+        value = collatz_single_recursive(1)
+        self.assertEqual(value, 1)
+
+    def test_single_recursive_2(self):
+        """unit test: collatz_single_recursive"""
+        value = collatz_single_recursive(100)
+        self.assertEqual(value, 26)
+
+    def test_single_recursive_3(self):
+        """unit test: collatz_single_recursive"""
+        value = collatz_single_recursive(210)
+        self.assertEqual(value, 40)
+
+    def test_single_recursive_4(self):
+        """unit test: collatz_single_recursive"""
+        value = collatz_single_recursive(837799)
+        self.assertEqual(value, 525)
+
+    def test_single_recursive_5(self):
+        """unit test: collatz_single_recursive"""
+        value = collatz_single_recursive(999999)
+        self.assertEqual(value, 259)
+
+    def test_single_recursive_6(self):
+        """unit test: collatz_single_recursive"""
+        value = collatz_single_recursive(5040)
+        self.assertEqual(value, 42)
+
+    def test_single_recursive_7(self):
+        """unit test: collatz_single_recursive"""
+        value = collatz_single_recursive(1000)
+        self.assertEqual(value, 112)
 
     # -----
     # print
