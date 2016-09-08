@@ -17,7 +17,7 @@ from unittest import main, TestCase
 
 from Collatz import collatz_read, collatz_eval, collatz_print, collatz_solve
 
-# -----------
+# ------------
 # TestCollatz
 # -----------
 
@@ -32,18 +32,41 @@ class TestCollatz (TestCase):
         i, j = collatz_read(s)
         self.assertEqual(i,  1)
         self.assertEqual(j, 10)
-    
+
+    # Test the case where only a single number is passed in
     def test_read_2(self):
-        s = "43 543\n"
+        s = "10"
         i, j = collatz_read(s)
-        self.assertEqual(i,  43)
-        self.assertEqual(j, 543)	
-     
+        self.assertEqual(i, -1)
+        self.assertEqual(j, -1)
+
+    # Test if an empty string is passed in
     def test_read_3(self):
-        s = "4234 523532\n"
+        s = ""
         i, j = collatz_read(s)
-        self.assertEqual(i,  4234)
-        self.assertEqual(j, 523532)
+        self.assertEqual(i, -1)
+        self.assertEqual(j, -1)
+
+    # Test a bunch of empty spaces
+    def test_read_4(self):
+        s = "       "
+        i, j = collatz_read(s)
+        self.assertEqual(i, -1)
+        self.assertEqual(j, -1)
+
+    # Check the case where there are 2 items, but aren't numbers
+    def test_read_5(self):
+        s = "a b"
+        i, j = collatz_read(s)
+        self.assertEqual(i, -1)
+        self.assertEqual(j, -1)
+
+    # Check the case where there are decimals
+    def test_read_6(self):
+        s = "10.3 1.12"
+        i, j = collatz_read(s)
+        self.assertEqual(i, -1)
+        self.assertEqual(j, -1)
 
     # ----
     # eval
@@ -65,6 +88,18 @@ class TestCollatz (TestCase):
         v = collatz_eval(900, 1000)
         self.assertEqual(v, 174)
 
+    def test_eval_5(self):
+        v = collatz_eval(-1, -1)
+        self.assertEqual(v, -1)
+
+    def test_eval_6(self):
+        v = collatz_eval(1, 1)
+        self.assertEqual(v, 1)
+
+    def test_eval_7(self):
+        v = collatz_eval(200, 100)
+        self.assertEqual(v, 125)
+
     # -----
     # print
     # -----
@@ -76,36 +111,36 @@ class TestCollatz (TestCase):
 
     def test_print_2(self):
         w = StringIO()
-        collatz_print(w, 123, 1241, 182)
-        self.assertEqual(w.getvalue(), "123 1241 182\n")
-
-    def test_print_3(self):
-        w = StringIO()
-        collatz_print(w, 1321, 141243, 354)
-        self.assertEqual(w.getvalue(), "1321 141243 354\n")
-
-
+        collatz_print(w, -1, -1, -1)
+        self.assertEqual(w.getvalue(), '')
+    
     # -----
     # solve
     # -----
 
-    def test_solve_1(self):
+    def test_solve(self):
         r = StringIO("1 10\n100 200\n201 210\n900 1000\n")
         w = StringIO()
         collatz_solve(r, w)
-        self.assertEqual(w.getvalue(), "1 10 20\n100 200 125\n201 210 89\n900 1000 174\n")
+        self.assertEqual(
+            w.getvalue(), "1 10 20\n100 200 125\n201 210 89\n900 1000 174\n")
 
+    # Test for just a single number in a linee
+    def test_solve_1(self):
+        r = StringIO("1 10\n200\n201 210\n900 1000\n")
+        w = StringIO()
+        collatz_solve(r, w)
+        self.assertEqual(
+            w.getvalue(), "1 10 20\n201 210 89\n900 1000 174\n")
+
+    # Test for a line with just space/empty line
     def test_solve_2(self):
-        r = StringIO("434 23\n352 4353\n234 54353\n1 5\n")
+        r = StringIO("1 10\n \n201 210\n900 1000\n")
         w = StringIO()
         collatz_solve(r, w)
-        self.assertEqual(w.getvalue(), "434 23 144\n352 4353 238\n234 54353 340\n1 5 8\n")
+        self.assertEqual(
+            w.getvalue(), "1 10 20\n201 210 89\n900 1000 174\n")
 
-    def test_solve_3(self):
-        r = StringIO("3 64\n327 734\n53 346346\n34 545432\n")
-        w = StringIO()
-        collatz_solve(r, w)
-        self.assertEqual(w.getvalue(), "3 64 113\n327 734 171\n53 346346 443\n34 545432 470\n")
 
 
 # ----
