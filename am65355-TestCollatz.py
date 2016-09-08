@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.5
 
 # -------------------------------
 # projects/collatz/TestCollatz.py
@@ -15,7 +15,7 @@
 from io import StringIO
 from unittest import main, TestCase
 
-from Collatz import collatz_read, collatz_eval, collatz_print, collatz_solve
+from Collatz import collatz_read, collatz_eval, collatz_print, collatz_solve, find_cycle_length
 
 # -----------
 # TestCollatz
@@ -46,10 +46,32 @@ class TestCollatz (TestCase):
         self.assertEqual(j,  1)
 
     def test_read_4(self):
+        s = "               \n"
+        i, j = collatz_read(s)
+        self.assertEqual(i, -1)
+        self.assertEqual(j, -1)
+
+    def test_read_5(self):
         s = "    930 52    \n"
         i, j = collatz_read(s)
         self.assertEqual(i, 930)
         self.assertEqual(j,  52)
+
+    # ------------
+    # cycle_length
+    # ------------
+
+    def test_cycle_length_1(self):
+        v = find_cycle_length(10)
+        self.assertEqual(v, 7)
+
+    def test_cycle_length_2(self):
+        v = find_cycle_length(473)
+        self.assertEqual(v, 36)
+
+    def test_cycle_length_3(self):
+        v = find_cycle_length(9999)
+        self.assertEqual(v, 92)
 
     # ----
     # eval
