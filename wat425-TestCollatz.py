@@ -15,7 +15,7 @@
 from io import StringIO
 from unittest import main, TestCase
 
-from SphereCollatz import collatz_read, collatz_eval, collatz_print, collatz_solve, build_cache
+from SphereCollatz import collatz_read, collatz_eval, collatz_print, collatz_solve, build_cache, get_cycle_length
 
 # -----------
 # TestCollatz
@@ -23,6 +23,7 @@ from SphereCollatz import collatz_read, collatz_eval, collatz_print, collatz_sol
 
 
 class TestCollatz (TestCase):
+
     def setUp(self):
         build_cache()
 
@@ -91,12 +92,42 @@ class TestCollatz (TestCase):
     # solve
     # -----
 
-    def test_solve(self):
+    def test_solve_1(self):
         r = StringIO("1 10\n100 200\n201 210\n900 1000\n")
         w = StringIO()
         collatz_solve(r, w)
         self.assertEqual(
             w.getvalue(), "1 10 20\n100 200 125\n201 210 89\n900 1000 174\n")
+
+    def test_solve_2(self):
+        r = StringIO("302349 472629\n358936 204748\n840068 199618\n")
+        w = StringIO()
+        collatz_solve(r, w)
+        self.assertEqual(
+            w.getvalue(), "302349 472629 449\n358936 204748 443\n840068 199618 525\n")
+
+    def test_solve_3(self):
+        r = StringIO("1 1\n3 1\n328897 597853\n")
+        w = StringIO()
+        collatz_solve(r, w)
+        self.assertEqual(
+            w.getvalue(), "1 1 1\n3 1 8\n328897 597853 470\n")
+
+    # -----
+    # get_cycle_length
+    # -----
+
+    def test_get_cycle_length_1(self):
+        n = 1
+        self.assertEqual(get_cycle_length(n), 1)
+
+    def test_get_cycle_length_2(self):
+        n = 10
+        self.assertEqual(get_cycle_length(n), 7)
+
+    def test_get_cycle_length_3(self):
+        n = 999999
+        self.assertEqual(get_cycle_length(n), 259)
 
 # ----
 # main
