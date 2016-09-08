@@ -102,7 +102,7 @@ class TestCollatz (TestCase):
         self.assertEqual(w.getvalue(), "434 23 144\n352 4353 238\n234 54353 340\n1 5 8\n")
 
     def test_solve_3(self):
-        r = StringIO("3 64\n327 734\n53 346346\n34 545432\n123\n")
+        r = StringIO("3 64\n327 734\n53 346346\n34 545432\n")
         w = StringIO()
         collatz_solve(r, w)
         self.assertEqual(w.getvalue(), "3 64 113\n327 734 171\n53 346346 443\n34 545432 470\n")
