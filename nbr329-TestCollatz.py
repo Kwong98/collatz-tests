@@ -15,7 +15,7 @@
 from io import StringIO
 from unittest import main, TestCase
 
-from Collatz import collatz_read, collatz_eval, collatz_print, collatz_solve
+from Collatz import collatz_read, collatz_eval, collatz_print, collatz_solve, eval_one, computeIndices
 
 # -----------
 # TestCollatz
@@ -26,28 +26,28 @@ class TestCollatz (TestCase):
     # ----
     # read
     # ----
-    
+
     def test_read1(self):
         s = "1 10\n"
-        r = StringIO(s);
+        r = StringIO(s)
         i, j = collatz_read(r)
         self.assertEqual(i,  1)
         self.assertEqual(j, 10)
 
     def test_read2(self):
         s = "1 20\n"
-        r = StringIO(s);
+        r = StringIO(s)
         i, j = collatz_read(r)
         self.assertEqual(i,  1)
         self.assertEqual(j, 20)
 
     def test_read3(self):
         s = "1 100\n"
-        r = StringIO(s);
+        r = StringIO(s)
         i, j = collatz_read(r)
         self.assertEqual(i,  1)
         self.assertEqual(j, 100)
-    
+
     # ----
     # eval
     # ----
@@ -67,6 +67,38 @@ class TestCollatz (TestCase):
     def test_eval_4(self):
         v = collatz_eval(900, 1000)
         self.assertEqual(v, 174)
+
+    # -----
+    # eval_one
+    # -----
+
+    def test_evale_one1(self):
+      v = eval_one(2)
+      self.assertEqual(v,2)
+
+    def test_evale_one2(self):
+      v = eval_one(4)
+      self.assertEqual(v,3)
+
+    def test_evale_one3(self):
+      v = eval_one(5)
+      self.assertEqual(v,6)
+
+    # -----
+    # computeIndices
+    # -----
+
+    def test_evale_one1(self):
+      v = computeIndices(2,6)
+      self.assertEqual(v[0][0],2)
+
+    def test_evale_one2(self):
+      v = computeIndices(2,4)
+      self.assertEqual(v[0][0],2)
+
+    def test_evale_one3(self):
+      v = computeIndices(4,5)
+      self.assertEqual(v[0][0],4)
 
     # -----
     # print
